@@ -510,6 +510,22 @@ class Money implements Arrayable, Jsonable, JsonSerializable, Renderable
     }
 
     /**
+     * format amount.
+     *
+     * @return string
+     */
+    public function formatAmount()
+    {
+        $negative = $this->isNegative();
+        $value = $this->getValue();
+        $amount = $negative ? -$value : $value;
+        $thousands = $this->currency->getThousandsSeparator();
+        $decimals = $this->currency->getDecimalMark();
+
+        return number_format($amount, 2, $decimals, $thousands);
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
